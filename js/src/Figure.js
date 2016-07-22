@@ -13,8 +13,7 @@
  * limitations under the License.
  */
 
-define(["jupyter-js-widgets", "d3", "underscore"],
-       function(widgets, d3, _) {
+define(["jupyter-js-widgets", "d3", "underscore"], function(widgets, d3, _) {
     "use strict";
 
     var Figure = widgets.DOMWidgetView.extend({
@@ -22,7 +21,7 @@ define(["jupyter-js-widgets", "d3", "underscore"],
         initialize : function() {
             this.setElement(document.createElementNS(d3.ns.prefix.svg, "svg"));
             // Internet Explorer does not support classList for svg elements
-            this.el.setAttribute("class", "bqplot figure");
+            this.el.setAttribute("class", "bqplot figure jupyter-widgets");
             Figure.__super__.initialize.apply(this, arguments);
         },
 
@@ -48,18 +47,20 @@ define(["jupyter-js-widgets", "d3", "underscore"],
             this.figure_padding_y = this.model.get("padding_y");
             this.clip_id = "clip_path_" + this.id;
 
-            this.$el.css({
-                "user-select": "none",
-                "ms-user-select": "none",
-                "moz-user-select": "none",
-                "khtml-user-select": "none",
-                "webkit-user-select": "none"});
+            // Set user-selection to none
+            this.el.style["user-select"] = "none";
+            this.el.style["ms-user-select"] = "none";
+            this.el.style["moz-user-select"] = "none";
+            this.el.style["khtml-user-select"] = "none";
+            this.el.style["webkit-user-select"] = "none";
 
-            this.$el.css({"flex-grow": "1",
-                          "flex-shrink": "1",
-                          "align-self": "stretch",
-                          "min-width": this.width,
-                          "min-height": this.height});
+            // TODO: these should be set widh Layout
+            this.el.style["flex-grow"] = "1";
+            this.el.style["flex-shrink"] = "1";
+            this.el.style["align-self"] = "1";
+            this.el.style["min-width"] = "1";
+            this.el.style["min-height"] = "1";
+
             this.margin = this.model.get("fig_margin");
 
             this.svg = d3.select(this.el)
@@ -165,7 +166,7 @@ define(["jupyter-js-widgets", "d3", "underscore"],
                 // the output cell and hence we need to unbind it when this
                 // view is being removed. To identify the event listener
                 // corresponding to this view, we need the id.
-                $(that.options.cell).on("output_area_resize."+that.id, function() {
+                $(that.options.cell).on("output_area_resize." + that.id, function() {
                     that.update_layout();
                 });
 
@@ -213,7 +214,7 @@ define(["jupyter-js-widgets", "d3", "underscore"],
 
         remove: function() {
             this.svg.remove();
-            $(this.options.cell).off("output_area_resize."+this.id);
+            $(this.options.cell).off("output_area_resize." + this.id);
             Figure.__super__.remove.apply(this);
         },
 
