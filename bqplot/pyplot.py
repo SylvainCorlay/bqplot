@@ -26,13 +26,18 @@ Pyplot
    figure
    show
    axes
+   title
+   legend
 
    plot
    scatter
    hist
+   pie
    bar
    ohlc
    geo
+   hline
+   vline
 
    clear
    close
