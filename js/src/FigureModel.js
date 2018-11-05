@@ -38,6 +38,7 @@ var FigureModel = basemodel.BaseModel.extend({
             scale_y: undefined,
             fig_color: null,
             title_style: {},
+            theme: 'gg',
             background_style: {},
             legend_style: {},
             legend_text: {},
