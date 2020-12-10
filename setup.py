@@ -99,7 +99,7 @@ def js_prerelease(command, strict=False):
 def update_package_data(distribution):
     """Update package_data to catch changes during setup."""
     build_py = distribution.get_command_obj('build_py')
-    # distribution.package_data = find_package_data()
+    distribution.package_data = find_package_data()
     # re-init build_py options which load package_data
     build_py.finalize_options()
 
@@ -193,6 +193,7 @@ setup_args = dict(
         'egg_info': js_prerelease(egg_info),
         'sdist': js_prerelease(sdist, strict=True),
         'jsdeps': NPM,
+                channel.close()
     },
     author='The BQplot Development Team',
     url='https://github.com/bloomberg/bqplot',
